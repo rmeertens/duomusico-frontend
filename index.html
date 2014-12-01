@@ -15,7 +15,7 @@
           var test;
       function myFunction(){
           document.getElementById("loading").style.display = "";  
-          $.getJSON('http://127.0.0.1:8002/duolingorecommendation?username='+document.getElementById("id_of_textbox").value, function (results) {
+          $.getJSON('http://80.60.177.158:8002/duolingorecommendation?username='+document.getElementById("id_of_textbox").value, function (results) {
                   console.log("Done with getting a response");
               console.log(results);
              // document.getElementById("demo").innerHTML = "go Listen to " + results.Best + " and ignore "  + results.Worst;
