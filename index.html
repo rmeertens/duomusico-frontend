@@ -1,100 +1,158 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
-  <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Nextemersion : Get a song/book/movie suggestion based on your duolingo level. ">
+<head>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-    <title>Nextemersion</title>
-      <script src="http://code.jquery.com/jquery-latest.js"></script>
-      <script>
-          
-          var test;
-      function myFunction(){
-          document.getElementById("loading").style.display = "";  
-          $.getJSON('http://80.60.177.158:8002/duolingorecommendation?username='+document.getElementById("id_of_textbox").value, function (results) {
-                  console.log("Done with getting a response");
-              console.log(results);
-             // document.getElementById("demo").innerHTML = "go Listen to " + results.Best + " and ignore "  + results.Worst;
-              test=results;
-              for	(index = 0; index < results.length; index++) {
-                    var nameAndArtist = results[index];
-                    searchAlbums(nameAndArtist.NameSong+ " " + nameAndArtist.Artist,document.getElementById("spotify"+index));      
-                }
-              document.getElementById("loading").style.display = "none";
-        
-      });
-      }
-        var searchAlbums = function (query, element) {
-    $.ajax({
-        url: 'https://api.spotify.com/v1/search',
-        data: {
-            q: query,
-            type: 'track'
-        },
-        success: function (response) {
-            console.log(response);
-            
-           // resultsPlaceholder.innerHTML = template(response);
-            element.innerHTML = "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:"+response.tracks.items[0].id+"\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe>";
-        }
-    });
-};
-    </script>
-  </head>
-
-  <body>
-
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <h1 id="project_title">Duolingo e-mersion</h1>
-          <h2 id="project_tagline">Using Artificial Intelligence to suggest the a song based based on your duolingo level. </h2>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a id="welcome-to-our-site" class="anchor" href="#welcome-to-our-site" aria-hidden="true"><span class="octicon octicon-link"></span></a>Enter your username!</h3>
-
-<p>This automatic page </p> <button onclick="myFunction()">Click me</button>
-<input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox"><br>
-          
-<p id="demo"></p>
-          <div id="loading">
-<img id="loading-image" src="images/loading.gif.gif" alt="Loading..." />
-</div>  
-        <p id="spotify1"></p>
-          <p id="spotify2"></p>
-          <p id="spotify3"></p>
-          <p id="spotify4"></p>
-          <p id="spotify5"></p>
-          <p id="spotify6"></p>
-          <p id="spotify7"></p>
-          <p id="spotify8"></p>
-          <p id="spotify9"></p>
-          <p id="spotify10"></p>
-      </section>
-        
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Nextemersion maintained by <a href="https://github.com/Pinch-of-intelligence">Pinch-of-intelligence</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+    <title>Portfolio Item - Start Bootstrap Template</title>
+ <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
-    document.getElementById("loading").style.display = "none";
+        var test;
+
+        function clearData() {
+             a = document.getElementById("test1");
+                    a.innerHTML = "";
+            for (var x = 1; x <= 4; x++) {
+                //document.getElementById("spotify" + x).innerHTML = "";
+            }
+        }
+
+        function myFunction() {
+            //document.getElementById("loading").style.display = "";
+            clearData();
+            $.getJSON('http://80.60.177.158:8002/duolingorecommendation?username=' + document.getElementById("id_of_textbox").value, function(results) {
+                console.log("Done with getting a response");
+                console.log(results);
+                test = results;
+                for (var index = 0; index < results.length; index++) {
+                    var nameAndArtist = results[index];
+                    
+                    
+                    var toAdd =  "<div class=\"col-sm-6 col-md-4\">\
+                       <div class=\"thumbnail\">\
+        <div class=\"caption\">\
+        <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
+        <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>\
+        <h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  "+ nameAndArtist.Score+"</h3>\
+      </div>\
+        <div id=\"spotify"+index+"\"></div>\
+    </div>\
+  </div>";
+                    if(index%3==2)
+                    {
+                        toAdd ="</div><div class=\"row\">" +toAdd;
+                    }
+                        
+                    a = document.getElementById("test1");
+                    a.innerHTML = a.innerHTML + toAdd;
+                    
+                    searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist,index);
+                }
+//                document.getElementById("loading").style.display = "none";
+
+            });
+        }
+      var searchAlbums = function(query, index) {
+            $.ajax({
+                url: 'https://api.spotify.com/v1/search',
+                data: {
+                    q: query,
+                    type: 'track'
+                },
+                success: function(response) {
+                    console.log("Response is: ");
+                    console.log(response);
+
+                    console.log("Element is: ");
+                    console.log(index);
+                    if(response.tracks.items.length>0)
+                    {
+                        document.getElementById("spotify" + index).innerHTML = "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:" + response.tracks.items[0].id + "\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe>";    
+                    }
+                    else
+                    {
+                         document.getElementById("spotify" + index).innerHTML = "<img src=\"notfound.png\" alt=\"Oh no..\" style= \"width:300px;height:380px\">"
+                        
+                   
+                    }
+                }
+            });
+        };
     </script>
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/portfolio-item.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <!-- Portfolio Item Heading -->
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Duolingo e-mersion
+                    <small>Using artifical intelligence to select songs when learning a new language</small>
+                </h1>
+            </div>
+        </div>
+        <!-- /.row -->
+
+        <!-- Portfolio Item Row -->
+        <div class="row">
+            <div class="col-md-4">
+                <h3>What to listen</h3>
+                <p>You want to hear songs based on what words you know... fill in your Duolingo username here:</p>
+              
+            <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox">
+            <button onclick="myFunction()">Search songs</button>
+            </div>
+
+        </div>
+        <!-- /.row -->
+
+        <!-- Related Projects Row -->
+     <div class="row" id="test1">
+  
+       
+</div>
+        
+        <div class="row featurette">
+        <div class="col-md-7">
+          <h2 class="featurette-heading">Contact me </h2>
+          Do you have any questions? Want to help with beta testing? Can you contribute code? Should we clearly add this one songtext?
+            Send a mail to rolandmeertens@gmail.com
+        </div>
+      </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+</body>
+    <script>
+   // document.getElementById("loading").style.display = "none";
+</script>
+
 </html>
