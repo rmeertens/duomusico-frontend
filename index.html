@@ -25,6 +25,49 @@
         function myFunction() {
             //document.getElementById("loading").style.display = "";
             clearData();
+            $.ajax({
+                type: "GET",
+                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value,
+                contentType: "application/json; charset=UTF-8",
+                dataType: "json",
+                
+                success: function(results) {
+                    
+                    console.log("Done with getting a response in the new thing");
+                    console.log(results);
+                    test = results;
+                    for (var index = 0; index < results.length; index++) {
+                        var nameAndArtist = results[index];
+                    
+                    
+                        var toAdd =  "<div class=\"col-sm-6 col-md-4\">\
+                            <div class=\"thumbnail\">\
+                            <div class=\"caption\">\
+                            <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
+                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>\
+                            <h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  "+ nameAndArtist.Score+"</h3>\
+                            </div>\
+                            <div id=\"spotify"+index+"\"></div>\
+                            </div>\
+                            </div>";
+                        if(index%3==2)
+                        {
+                            toAdd ="</div><div class=\"row\">" +toAdd;
+                        }
+                        
+                        a = document.getElementById("test1");
+                        a.innerHTML = a.innerHTML + toAdd;
+                    
+                        searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist,index);
+                }
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#error").html(xhr.responseText);
+            }
+        });
+        }
+            
+            /*
             $.getJSON('http://80.60.177.158:8002/duolingorecommendation?username=' + document.getElementById("id_of_textbox").value, function(results) {
                 console.log("Done with getting a response");
                 console.log(results);
@@ -56,7 +99,7 @@
 //                document.getElementById("loading").style.display = "none";
 
             });
-        }
+        }*/
       var searchAlbums = function(query, index) {
             $.ajax({
                 url: 'https://api.spotify.com/v1/search',
