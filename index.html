@@ -24,7 +24,7 @@
             
             // "<div class=\"col-sm-6 col-md-4\">\
             var toFill = "<div class=\"col-sm-6 col-md-4 myclass\" >\
-                            <div class=\"thumbnail\">\
+                            <div class=\"thumbnail\" height: 648px>\
                             <div class=\"caption\">\
                             <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
                             <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>";
@@ -55,7 +55,7 @@
             clearData();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value,
+                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value+"&random=false",
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
                 
@@ -78,7 +78,7 @@
             clearData();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/randomSong?username=" + document.getElementById("id_of_textbox").value,
+                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value+"&random=true",
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
                 
@@ -87,7 +87,30 @@
                     console.log("Done with getting a response with random songs");
                     console.log(results);
                     test = results;
-                    placeResults(results, false);
+                    placeResults(results, true);
+                    
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#error").html(xhr.responseText);
+            }
+        });
+        }
+        
+        function getRandomSongsInLanguage(language) {
+            clearData();
+            $.ajax({
+                type: "GET",
+                url: "http://80.60.177.158:8002/randomSong?langage="+language,
+                
+                contentType: "application/json; charset=UTF-8",
+                dataType: "json",
+                
+                success: function(results) {
+                    
+                    console.log("Done with getting a response with random songs");
+                    console.log(results);
+                    test = results;
+                    placeResults(results, true);
                     
             },
             error: function (xhr, textStatus, errorThrown) {
@@ -125,11 +148,15 @@
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Flags -->
+    <link href="./css/flag-icon.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/portfolio-item.css" rel="stylesheet">
     
+    
     <STYLE type="text/css">
         div.myclass {min-width: 350px}
+        div.thumbnail{height: 648px}
         
     </STYLE>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -164,17 +191,39 @@
                 <h3>What to listen</h3>
                 <p>You want to hear songs based on what words you know... fill in your Duolingo username here:</p>
               
-            <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox"><button onclick="myFunction()">Search songs</button><button onclick="getRandomSongs()" id="getRandomSongsButton" hidden="true">Random songs</button>
+            <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox"><button onclick="myFunction()">Best songs</button><button onclick="getRandomSongs()" id="getRandomSongsButton" hidden="true">Random songs</button>
+            </div>
+            
+            <div>
+                <h3>What do the icons mean?</h3>
+                <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Artist name</h5>
+                <h5><span class="glyphicon glyphicon-music" aria-hidden="true"></span>  Song name</h5>
+            <h5><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> The percentage of words you know</h5>
             </div>
 
         </div>
         <!-- /.row -->
-
+        <div id="test1"></div>
         <!-- Related Projects Row -->
-     <div class="container-fluid" id="test1">
-  
-       
-</div>
+
+        <div class="container">
+      <section id="examples">
+        <div class="page-header">
+          <h1>Get random music in a specific language</h1>
+        </div>
+        <div class="no-wrap">
+          <h1>
+            
+              <span class="label label-primary"><span class="flag-icon flag-icon-fr"></span>French</span>
+               <span class="label label-primary"><span class="flag-icon flag-icon-se"></span>Swedish</span>
+              <span class="label label-primary"><span class="flag-icon flag-icon-us"></span>English</span>
+          </h1>
+        </section>
+      </section>     
+    </div>
+    <footer class="footer">
+      <div class="container">
+        </div>
         
         <div class="row featurette">
         <div class="col-md-7">
@@ -182,7 +231,11 @@
           Do you have any questions? Want to help with beta testing? Can you contribute code? Should we clearly add this one songtext?
             Send a mail to rolandmeertens@gmail.com
         </div>
+
       </div>
+        
+    
+    </footer>
     <!-- /.container -->
 
     <!-- jQuery -->
