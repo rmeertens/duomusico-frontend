@@ -97,10 +97,11 @@
         }
         
         function getRandomSongsInLanguage(language) {
+            console.log("searching songs in language" + language);
             clearData();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/randomSong?langage="+language,
+                url: "http://80.60.177.158:8002/randomSong?language="+language,
                 
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
@@ -214,9 +215,9 @@
         <div class="no-wrap">
           <h1>
             
-              <span class="label label-primary"><span class="flag-icon flag-icon-fr"></span>French</span>
-               <span class="label label-primary"><span class="flag-icon flag-icon-se"></span>Swedish</span>
-              <span class="label label-primary"><span class="flag-icon flag-icon-us"></span>English</span>
+              <span class="label label-primary" onclick=getRandomSongsInLanguage("fr")><span class="flag-icon flag-icon-fr"></span>French</span>
+               <span class="label label-primary" onclick=getRandomSongsInLanguage("sv")><span class="flag-icon flag-icon-se"></span>Swedish</span>
+              <span class="label label-primary" onclick=getRandomSongsInLanguage("en")><span class="flag-icon flag-icon-us"></span>English</span>
           </h1>
         </section>
       </section>     
