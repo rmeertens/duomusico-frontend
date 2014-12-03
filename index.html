@@ -8,20 +8,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+    
     <title>Portfolio Item - Start Bootstrap Template</title>
  <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         var test;
 
         function clearData() {
-             a = document.getElementById("test1");
-                    a.innerHTML = "";
-            for (var x = 1; x <= 4; x++) {
-                //document.getElementById("spotify" + x).innerHTML = "";
-            }
+            a = document.getElementById("test1");
+            a.innerHTML = "";
         }
-
+        
+        function getDivArtistSongRating(nameAndArtist, index, mustDisplayScore)
+        {
+            
+            // "<div class=\"col-sm-6 col-md-4\">\
+            var toFill = "<div class=\"col-sm-6 col-md-4 myclass\" >\
+                            <div class=\"thumbnail\">\
+                            <div class=\"caption\">\
+                            <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
+                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>";
+            if(mustDisplayScore)
+            {
+                toFill += "<h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  "+ nameAndArtist.Score+" percent</h3>";
+            }
+            toFill += "      </div>\
+                            <div id=\"spotify"+index+"\"></div>\
+                            </div>\
+                            </div>";
+            return toFill;
+   
+        }
+        
+        function placeResults(results, mustDisplayScore)
+        {
+            for (var index = 0; index < results.length; index++) {
+                var nameAndArtist = results[index];
+                var toAdd = getDivArtistSongRating(nameAndArtist,index, mustDisplayScore);
+                a = document.getElementById("test1");
+                a.innerHTML = a.innerHTML + toAdd;
+                searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist,index);
+            }   
+        }
         function myFunction() {
             //document.getElementById("loading").style.display = "";
             clearData();
@@ -36,30 +64,31 @@
                     console.log("Done with getting a response in the new thing");
                     console.log(results);
                     test = results;
-                    for (var index = 0; index < results.length; index++) {
-                        var nameAndArtist = results[index];
+                    placeResults(results, true);
+                    $("#getRandomSongsButton").show();  
                     
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                $("#error").html(xhr.responseText);
+            }
+        });
+        }
+        
+        function getRandomSongs() {
+            clearData();
+            $.ajax({
+                type: "GET",
+                url: "http://80.60.177.158:8002/randomSong?username=" + document.getElementById("id_of_textbox").value,
+                contentType: "application/json; charset=UTF-8",
+                dataType: "json",
+                
+                success: function(results) {
                     
-                        var toAdd =  "<div class=\"col-sm-6 col-md-4\">\
-                            <div class=\"thumbnail\">\
-                            <div class=\"caption\">\
-                            <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
-                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>\
-                            <h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  "+ nameAndArtist.Score+"</h3>\
-                            </div>\
-                            <div id=\"spotify"+index+"\"></div>\
-                            </div>\
-                            </div>";
-                        if(index%3==2)
-                        {
-                            toAdd ="</div><div class=\"row\">" +toAdd;
-                        }
-                        
-                        a = document.getElementById("test1");
-                        a.innerHTML = a.innerHTML + toAdd;
+                    console.log("Done with getting a response with random songs");
+                    console.log(results);
+                    test = results;
+                    placeResults(results, false);
                     
-                        searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist,index);
-                }
             },
             error: function (xhr, textStatus, errorThrown) {
                 $("#error").html(xhr.responseText);
@@ -67,39 +96,7 @@
         });
         }
             
-            /*
-            $.getJSON('http://80.60.177.158:8002/duolingorecommendation?username=' + document.getElementById("id_of_textbox").value, function(results) {
-                console.log("Done with getting a response");
-                console.log(results);
-                test = results;
-                for (var index = 0; index < results.length; index++) {
-                    var nameAndArtist = results[index];
-                    
-                    
-                    var toAdd =  "<div class=\"col-sm-6 col-md-4\">\
-                       <div class=\"thumbnail\">\
-        <div class=\"caption\">\
-        <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
-        <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>\
-        <h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  "+ nameAndArtist.Score+"</h3>\
-      </div>\
-        <div id=\"spotify"+index+"\"></div>\
-    </div>\
-  </div>";
-                    if(index%3==2)
-                    {
-                        toAdd ="</div><div class=\"row\">" +toAdd;
-                    }
-                        
-                    a = document.getElementById("test1");
-                    a.innerHTML = a.innerHTML + toAdd;
-                    
-                    searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist,index);
-                }
-//                document.getElementById("loading").style.display = "none";
-
-            });
-        }*/
+          
       var searchAlbums = function(query, index) {
             $.ajax({
                 url: 'https://api.spotify.com/v1/search',
@@ -120,8 +117,6 @@
                     else
                     {
                          document.getElementById("spotify" + index).innerHTML = "<img src=\"notfound.png\" alt=\"Oh no..\" style= \"width:300px;height:380px\">"
-                        
-                   
                     }
                 }
             });
@@ -132,7 +127,11 @@
 
     <!-- Custom CSS -->
     <link href="css/portfolio-item.css" rel="stylesheet">
-
+    
+    <STYLE type="text/css">
+        div.myclass {min-width: 350px}
+        
+    </STYLE>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -161,19 +160,18 @@
 
         <!-- Portfolio Item Row -->
         <div class="row">
-            <div class="col-md-4">
+            <div>
                 <h3>What to listen</h3>
                 <p>You want to hear songs based on what words you know... fill in your Duolingo username here:</p>
               
-            <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox">
-            <button onclick="myFunction()">Search songs</button>
+            <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox"><button onclick="myFunction()">Search songs</button><button onclick="getRandomSongs()" id="getRandomSongsButton" hidden="true">Random songs</button>
             </div>
 
         </div>
         <!-- /.row -->
 
         <!-- Related Projects Row -->
-     <div class="row" id="test1">
+     <div class="container-fluid" id="test1">
   
        
 </div>
