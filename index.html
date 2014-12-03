@@ -8,120 +8,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    
-    <title>Portfolio Item - Start Bootstrap Template</title>
- <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+    <title>DuoMusico</title>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script>
         var test;
 
+
+
+        $(document).ready(function() {
+            $("#loadingNotification").hide();
+            $("#errorNotification").hide();
+            $("#explanation").hide();
+        });
+
         function clearData() {
+            $("#loadingNotification").hide();
+            $("#errorNotification").hide();
             a = document.getElementById("test1");
             a.innerHTML = "";
         }
-        
-        function getDivArtistSongRating(nameAndArtist, index, mustDisplayScore)
-        {
-            
+
+        function getDivArtistSongRating(nameAndArtist, index, mustDisplayScore) {
+
             // "<div class=\"col-sm-6 col-md-4\">\
             var toFill = "<div class=\"col-sm-6 col-md-4 myclass\" >\
                             <div class=\"thumbnail\" height: 648px>\
                             <div class=\"caption\">\
-                            <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   "+nameAndArtist.Artist+"</h3>\
-                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  "+nameAndArtist.NameSong+"</h3>";
-            if(mustDisplayScore)
-            {
-                toFill += "<h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  "+ nameAndArtist.Score+" percent</h3>";
+                            <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   " + nameAndArtist.Artist + "</h3>\
+                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  " + nameAndArtist.NameSong + "</h3>";
+            if (mustDisplayScore) {
+                toFill += "<h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  " + nameAndArtist.Score + " percent</h3>";
             }
             toFill += "      </div>\
-                            <div id=\"spotify"+index+"\"></div>\
+                            <div id=\"spotify" + index + "\"></div>\
                             </div>\
                             </div>";
             return toFill;
-   
+
         }
-        
-        function placeResults(results, mustDisplayScore)
-        {
+
+        function placeResults(results, mustDisplayScore) {
+            $("#loadingNotification").hide();
+            $("#explanation").show();
+            
             for (var index = 0; index < results.length; index++) {
                 var nameAndArtist = results[index];
-                var toAdd = getDivArtistSongRating(nameAndArtist,index, mustDisplayScore);
+                var toAdd = getDivArtistSongRating(nameAndArtist, index, mustDisplayScore);
                 a = document.getElementById("test1");
                 a.innerHTML = a.innerHTML + toAdd;
-                searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist,index);
-            }   
+                searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist, index);
+            }
         }
+
         function myFunction() {
             //document.getElementById("loading").style.display = "";
             clearData();
+            $("#loadingNotification").show();
+
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value+"&random=false",
+                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=false",
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
-                
+
                 success: function(results) {
-                    
-                    console.log("Done with getting a response in the new thing");
-                    console.log(results);
-                    test = results;
                     placeResults(results, true);
-                    $("#getRandomSongsButton").show();  
-                    
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                $("#error").html(xhr.responseText);
-            }
-        });
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    $("#errorNotification").show();
+                }
+            });
         }
-        
+
         function getRandomSongs() {
             clearData();
+            $("#loadingNotification").show();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value+"&random=true",
+                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=true",
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
-                
+
                 success: function(results) {
-                    
-                    console.log("Done with getting a response with random songs");
-                    console.log(results);
-                    test = results;
+
                     placeResults(results, true);
-                    
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                $("#error").html(xhr.responseText);
-            }
-        });
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    $("#errorNotification").show();
+                }
+            });
         }
-        
+
         function getRandomSongsInLanguage(language) {
             console.log("searching songs in language" + language);
             clearData();
+            $("#loadingNotification").show();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/randomSong?language="+language,
-                
+                url: "http://80.60.177.158:8002/randomSong?language=" + language,
+
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
-                
+
                 success: function(results) {
-                    
-                    console.log("Done with getting a response with random songs");
-                    console.log(results);
                     test = results;
                     placeResults(results, true);
-                    
-            },
-            error: function (xhr, textStatus, errorThrown) {
-                $("#error").html(xhr.responseText);
-            }
-        });
+
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    $("#error").html(xhr.responseText);
+                }
+            });
         }
-            
-          
-      var searchAlbums = function(query, index) {
+
+
+        var searchAlbums = function(query, index) {
             $.ajax({
                 url: 'https://api.spotify.com/v1/search',
                 data: {
@@ -134,13 +137,10 @@
 
                     console.log("Element is: ");
                     console.log(index);
-                    if(response.tracks.items.length>0)
-                    {
-                        document.getElementById("spotify" + index).innerHTML = "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:" + response.tracks.items[0].id + "\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe>";    
-                    }
-                    else
-                    {
-                         document.getElementById("spotify" + index).innerHTML = "<img src=\"notfound.png\" alt=\"Oh no..\" style= \"width:300px;height:380px\">"
+                    if (response.tracks.items.length > 0) {
+                        document.getElementById("spotify" + index).innerHTML = "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:" + response.tracks.items[0].id + "\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe>";
+                    } else {
+                        document.getElementById("spotify" + index).innerHTML = "<img src=\"notfound.png\" alt=\"Oh no..\" style= \"width:300px;height:380px\">"
                     }
                 }
             });
@@ -153,89 +153,96 @@
     <link href="./css/flag-icon.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="css/portfolio-item.css" rel="stylesheet">
-    
-    
+
+
     <STYLE type="text/css">
-        div.myclass {min-width: 350px}
-        div.thumbnail{height: 648px}
-        
+        div.myclass {
+            min-width: 350px
+        }
+        div.thumbnail {
+            height: 648px
+        }
     </STYLE>
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
 </head>
 
 <body>
 
-    <!-- Navigation -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>DuoMusico</h1>
+            <p>Using artifical intelligence to select songs when learning a new language</p>
 
-    <!-- Page Content -->
-    <div class="container">
-
-        <!-- Portfolio Item Heading -->
-        <div class="row">
-            <div class="col-lg-12">
-                <h1 class="page-header">Duolingo e-mersion
-                    <small>Using artifical intelligence to select songs when learning a new language</small>
-                </h1>
-            </div>
         </div>
-        <!-- /.row -->
+    </div>
+    
 
-        <!-- Portfolio Item Row -->
-        <div class="row">
-            <div>
+
+    <section>
+        <div class="container">
+            
                 <h3>What to listen</h3>
                 <p>You want to hear songs based on what words you know... fill in your Duolingo username here:</p>
-              
-            <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox"><button onclick="myFunction()">Best songs</button><button onclick="getRandomSongs()" id="getRandomSongsButton" hidden="true">Random songs</button>
-            </div>
-            
-            <div>
-                <h3>What do the icons mean?</h3>
-                <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Artist name</h5>
-                <h5><span class="glyphicon glyphicon-music" aria-hidden="true"></span>  Song name</h5>
-            <h5><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> The percentage of words you know</h5>
-            </div>
 
+                <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox">
+                <button onclick="myFunction()">Best songs</button>
+                <button onclick="getRandomSongs()" id="getRandomSongsButton">Random songs</button>
+            </div>
+    </section>
+    <section>
+    <div class="container">
+        <h1></h1>
+        <div class="alert alert-info" role="alert" id="loadingNotification">Loading data...</div>
+        <div class="alert alert-danger" role="alert" id="errorNotification">Something went wrong!</div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+        
+        <div id="explanation">
+            <h3>What do the icons mean?</h3>
+            <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Artist name</h5>
+            <h5><span class="glyphicon glyphicon-music" aria-hidden="true"></span>  Song name</h5>
+            <h5><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> The percentage of words you know</h5>
         </div>
         <!-- /.row -->
         <div id="test1"></div>
         <!-- Related Projects Row -->
-
-        <div class="container">
-      <section id="examples">
-        <div class="page-header">
-          <h1>Get random music in a specific language</h1>
         </div>
-        <div class="no-wrap">
-          <h1>
-            
-              <span class="label label-primary" onclick=getRandomSongsInLanguage("fr")><span class="flag-icon flag-icon-fr"></span>French</span>
-               <span class="label label-primary" onclick=getRandomSongsInLanguage("sv")><span class="flag-icon flag-icon-se"></span>Swedish</span>
-              <span class="label label-primary" onclick=getRandomSongsInLanguage("en")><span class="flag-icon flag-icon-us"></span>English</span>
-          </h1>
+    </section>
+    <div class="container">
+        <section id="examples">
+            <div class="page-header">
+                <h1>Get random music in a specific language</h1>
+            </div>
+            <div class="no-wrap">
+                <h1>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("fr")><span class="flag-icon flag-icon-fr"></span>French</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("sv")><span class="flag-icon flag-icon-se"></span>Swedish</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("en")><span class="flag-icon flag-icon-us"></span>English</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("de")><span class="flag-icon flag-icon-de"></span>German</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("it")><span class="flag-icon flag-icon-it"></span>Italian</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("es")><span class="flag-icon flag-icon-es"></span>Spanish</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("nl")><span class="flag-icon flag-icon-nl"></span>Dutch</span>
+                </h1>
+            </div>
         </section>
-      </section>     
+
+
     </div>
     <footer class="footer">
-      <div class="container">
-        </div>
-        
-        <div class="row featurette">
-        <div class="col-md-7">
-          <h2 class="featurette-heading">Contact me </h2>
-          Do you have any questions? Want to help with beta testing? Can you contribute code? Should we clearly add this one songtext?
-            Send a mail to rolandmeertens@gmail.com
+        <div class="container">
+            <div class="row featurette">
+                <div class="col-md-7">
+                    <h2 class="featurette-heading">Contact me </h2> Do you have any questions? Want to help with beta testing? Can you contribute code? Should we clearly add this one songtext? Send a mail to rolandmeertens@gmail.com
+                </div>
+
+            </div>
         </div>
 
-      </div>
-        
-    
     </footer>
     <!-- /.container -->
 
@@ -246,8 +253,8 @@
     <script src="js/bootstrap.min.js"></script>
 
 </body>
-    <script>
-   // document.getElementById("loading").style.display = "none";
+<script>
+    // document.getElementById("loading").style.display = "none";
 </script>
 
 </html>
