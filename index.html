@@ -33,15 +33,15 @@
 
             // "<div class=\"col-sm-6 col-md-4\">\
             var toFill = "<div class=\"col-sm-6 col-md-4 myclass\" >\
-                            <div class=\"thumbnail\" height: 648px>\
+                            <div class=\"thumbnail\" height: 948px>\
                             <div class=\"caption\">\
                             <h3><span class=\"glyphicon glyphicon-user\" aria-hidden=\"true\"></span>   " + nameAndArtist.Artist + "</h3>\
-                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  " + nameAndArtist.NameSong + "</h3>";
+                            <h3><span class=\"glyphicon glyphicon-music\" aria-hidden=\"true\"></span>  <a href=\""+nameAndArtist.TrackShareURL+"\" target=\"_blank\">" + nameAndArtist.NameSong + "</a></h3>";
             if (mustDisplayScore) {
                 toFill += "<h3><span class=\"glyphicon glyphicon-dashboard\" aria-hidden=\"true\"></span>  " + nameAndArtist.Score + " percent</h3>";
             }
             toFill += "      </div>\
-                            <div id=\"spotify" + index + "\"></div>\
+                            <div id=\"spotify" + index + "\"><iframe src=\"https://embed.spotify.com/?uri=spotify:track:" + nameAndArtist.SpotifyID + "\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe></div>\
                             </div>\
                             </div>";
             return toFill;
@@ -57,7 +57,7 @@
                 var toAdd = getDivArtistSongRating(nameAndArtist, index, mustDisplayScore);
                 a = document.getElementById("test1");
                 a.innerHTML = a.innerHTML + toAdd;
-                searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist, index);
+                //searchAlbums(nameAndArtist.NameSong + " " + nameAndArtist.Artist, index);
             }
         }
 
@@ -123,28 +123,6 @@
             });
         }
 
-
-        var searchAlbums = function(query, index) {
-            $.ajax({
-                url: 'https://api.spotify.com/v1/search',
-                data: {
-                    q: query,
-                    type: 'track'
-                },
-                success: function(response) {
-                    console.log("Response is: ");
-                    console.log(response);
-
-                    console.log("Element is: ");
-                    console.log(index);
-                    if (response.tracks.items.length > 0) {
-                        document.getElementById("spotify" + index).innerHTML = "<iframe src=\"https://embed.spotify.com/?uri=spotify:track:" + response.tracks.items[0].id + "\" width=\"300\" height=\"380\" frameborder=\"0\" allowtransparency=\"true\"></iframe>";
-                    } else {
-                        document.getElementById("spotify" + index).innerHTML = "<img src=\"notfound.png\" alt=\"Oh no..\" style= \"width:300px;height:380px\">"
-                    }
-                }
-            });
-        };
     </script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -161,6 +139,14 @@
         }
         div.thumbnail {
             height: 648px
+        }
+        
+        .jumbotron{
+            background: url("jumbotron-resize.jpg") no-repeat center center; 
+            -webkit-background-size: 100% 100%;
+            -moz-background-size: 100% 100%;
+            -o-background-size: 100% 100%;
+            background-size: 100% 100%;
         }
     </STYLE>
     <!--[if lt IE 9]>
@@ -227,6 +213,8 @@
                     <span class="label label-primary" onclick=getRandomSongsInLanguage("it")><span class="flag-icon flag-icon-it"></span>Italian</span>
                     <span class="label label-primary" onclick=getRandomSongsInLanguage("es")><span class="flag-icon flag-icon-es"></span>Spanish</span>
                     <span class="label label-primary" onclick=getRandomSongsInLanguage("nl")><span class="flag-icon flag-icon-nl"></span>Dutch</span>
+                    <span class="label label-primary" onclick=getRandomSongsInLanguage("pt")><span class="flag-icon flag-icon-pt"></span>Portugese</span>
+                    
                 </h1>
             </div>
         </section>
