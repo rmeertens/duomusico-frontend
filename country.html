@@ -11,7 +11,7 @@
 
     <title>DuoMusico</title>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
-   
+    <script src="js/duomusico.js"></script>
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
@@ -44,31 +44,70 @@
 </head>
 
 <body>
-
     <div class="jumbotron">
         <div class="container">
             <h1>DuoMusico</h1>
-            <p>Showing what songs to listen when learning a new language</p>
+            <p>Using artifical intelligence to select songs when learning a new language</p>
+
         </div>
     </div>
     
 
-
+    <section>
+    <div class="container">
+        <h1></h1>
+        <div class="alert alert-info" role="alert" id="loadingNotification">Loading data...</div>
+        <div class="alert alert-danger" role="alert" id="errorNotification">Something went wrong!</div>
+        </div>
+    </section>
     <section>
         <div class="container">
-            <h3>What to listen?</h3>
-                <p>You want to immerse yourself in a new culture. When learning a new language it is hard to find songs that are both fun and easy to understand. We at Duomusico find songs that are easy to understand, and sorted on your current knowledge of a language. </p>
-
-            <div class="span12" style="text-align:center">
-    
-              <p><a class="btn btn-primary btn-lg" href="duolingo.html" role="button"><img src="Duolingo_logo.png" alt="Duolingo is awesome" class="img-rounded"  height="42" width="42"> Use Duolingo</a>
-            <a class="btn btn-primary btn-lg" href="country.html" role="button"><img src="world.png" alt="The world is awesome" class="img-rounded"  height="42" width="42"> Songs from a specific country</a></p>
-</div>   
+        <div class="row bs-downloads">
+    <div class="col-sm-6">
+       <div id="explanation">
+            <h3>What do the icons mean?</h3>
+            <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Artist name</h5>
+            <h5><span class="glyphicon glyphicon-music" aria-hidden="true"></span>  Song name</h5>
+            <h5><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> The percentage of words you know</h5>
+        </div>
+    </div>
+    <div class="col-sm-6">
+      <div id="currentLanguageOptions">
+        </div>
+    </div>
+  </div>
+       
+        
+        <!-- /.row -->
+        <div id="test1"></div>
+        <!-- Related Projects Row -->
+        </div>
+    </section>
+    <div class="container">
+        <section id="examples">
+            <div class="page-header">
+                <h1>Get random music in a specific language</h1>
             </div>
-    <!--</section>-->
-<div class="container">
-        <h2>Get relevant updates!</h2>
-        Festivities in countries you are learning a language from? New music relevant to the language you are learning? Sign up to our mailing list and we promise the updates will be interesting. 
+            
+            <div class="no-wrap">
+                <div class="container-fluid">
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("fr")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-fr"></span>French</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("sv")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-se"></span>Swedish</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("en")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-us"></span>English</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("de")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-de"></span>German</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("it")> <h1><span class="label label-primary" ><span class="flag-icon flag-icon-it"></span>Italian</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("es")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-es"></span>Spanish</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("nl")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-nl"></span>Dutch</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("pt")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-pt"></span>Portuguese</span></h1></div>
+                    <div class="btn btn-primary btn-lg col-sm-6 col-md-4" onclick=getRandomSongsInLanguage("da")><h1><span class="label label-primary" ><span class="flag-icon flag-icon-dk"></span>Danish</span></h1></div>
+                    </div>
+            </div>
+        </section>
+
+
+    </div>
+  <!-- Begin MailChimp Signup Form -->
+    <div class="container">
 <!-- Begin MailChimp Signup Form -->
 <link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
 <style type="text/css">
@@ -108,13 +147,13 @@
 <script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='NAME';ftypes[1]='text';fnames[2]='DUOLINGO';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 
 <!--End mc_embed_signup-->
-</section>
+
 <!--End mc_embed_signup-->
     <footer class="footer">
         <div class="container">
             <div class="row featurette">
                 <div class="col-md-7">
-                    <h2 class="featurette-heading">Contact me </h2> Do you have any questions? Want to help with beta testing? Can you contribute to our code? Are we really missing that one song? Send a mail to rolandmeertens@gmail.com
+                    <h2 class="featurette-heading">Contact me </h2> Do you have any questions? Want to help with beta testing? Can you contribute code? Should we clearly add this one songtext? Send a mail to rolandmeertens@gmail.com
                 </div>
 
             </div>
