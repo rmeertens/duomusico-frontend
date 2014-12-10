@@ -53,16 +53,16 @@
   ga('create', 'UA-57543235-1', 'auto');
   ga('send', 'pageview');
 
-</script>
+    </script>
+    <script> 
+$(function(){
+  $("#header").load("header.html"); 
+    $("#footer").load("footer.html"); 
+});
+</script> 
     
-    <div class="jumbotron">
-        <a href="index.html">
-        <div class="container">
-            <h1>DuoMusico</h1>
-            <p>Showing what songs to listen when learning a new language</p>
-        </div>
-            </a>
-    </div>
+    <div id="header"></div>
+    
     
 
     <section>
@@ -161,17 +161,9 @@
 <!--End mc_embed_signup-->
 
 <!--End mc_embed_signup-->
-    <footer class="footer">
-        <div class="container">
-            <div class="row featurette">
-                <div class="col-md-7">
-                    <h2 class="featurette-heading">Contact me </h2> Do you have any questions? Want to help with beta testing? Can you contribute code? Should we clearly add this one songtext? Send a mail to rolandmeertens@gmail.com
-                </div>
-
-            </div>
-        </div>
-
-    </footer>
+    
+    <div id="footer"></div>
+    
     <!-- /.container -->
 
     <!-- jQuery -->
