@@ -1,6 +1,7 @@
 var test;
 var lastLanguageRequested;
-
+//var ipAdress = "http://80.60.177.158:8002/"
+var ipAdress = "http://pinchofintelligence.com:8002/"
 
         $(document).ready(function() {
             $("#loadingNotification").hide();
@@ -82,7 +83,7 @@ var lastLanguageRequested;
 
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=false",
+                url: ipAdress+"duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=false",
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
 
@@ -101,7 +102,7 @@ var lastLanguageRequested;
             $("#loadingNotification").show();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=true",
+                url: ipAdress+"duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=true",
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
 
@@ -125,7 +126,7 @@ var lastLanguageRequested;
             $("#loadingNotification").show();
             $.ajax({
                 type: "GET",
-                url: "http://80.60.177.158:8002/randomSong?language=" + language,
+                url: ipAdress+"randomSong?language=" + language,
 
                 contentType: "application/json; charset=UTF-8",
                 dataType: "json",
