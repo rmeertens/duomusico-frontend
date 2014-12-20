@@ -6,7 +6,7 @@ div.myclass {
         }
         
         .jumbotron{
-            background: url("../jumbotron-resize.jpg") no-repeat center center; 
+            background: url("../jumbotron-resize-with-logo.png") no-repeat center center; 
             -webkit-background-size: 100% 100%;
             -moz-background-size: 100% 100%;
             -o-background-size: 100% 100%;
