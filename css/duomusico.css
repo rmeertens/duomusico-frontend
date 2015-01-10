@@ -8,4 +8,5 @@ div.thumbnail {
 .jumbotron{
     background-image: url("../jumbotron-resize.jpg") ; 
     position: relative;
+    margin-bottom: 0px;
 }
