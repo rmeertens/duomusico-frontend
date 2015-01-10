@@ -82,9 +82,9 @@ function displayCurrentLanguage(languageDisplayed)
     var a = document.getElementById("currentLanguageOptions");
     a.innerHTML = "\
     <h1>\
-        <div class=\"btn btn-primary btn-lg col-sm-6 col-md-4\" onclick=\"getRandomSongsInLanguage(\""+languageDisplayed+"\")\">\
+        <div class=\"btn btn-primary btn-lg col-sm-6 col-md-4\" onclick=getRandomSongsInLanguage(\""+languageDisplayed+"\")>\
             <span class=\"label label-primary\"><span class=\"flag-icon flag-icon-"+flagServerAdapter(languageDisplayed)+"\"></span>\
-            Refresh</span></div>\
+            Random songs</span></div>\
         <a href=\""+playListsPerLanguage[languageDisplayed]+"\" target=\"_blank\">\
         <span class=\"btn btn-primary btn-lg col-sm-6 col-md-4\" >Spotify Playlist</span></a>\
 </h1>";
