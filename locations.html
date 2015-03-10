@@ -17,6 +17,8 @@
  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="ipmapper.js"></script>
+    <script src='https://cdn.firebase.com/js/client/2.0.4/firebase.js'></script>
+
     <!-- Flags -->
     <link href="./css/flag-icon.css" rel="stylesheet">
     <!-- Custom CSS -->
@@ -50,13 +52,21 @@ $(function(){
     
         try{
             IPMapper.initializeMap("map");
-            IPMapper.addIPMarker("145.116.149.110");
+            //IPMapper.addIPMarker("145.116.149.110");
         } catch(e){
             //handle error
             console.log("Error!!!!");
         }
     
 });
+         
+          var myDataRef = new Firebase('temporary-duomusico.firebaseio.com/history');
+   
+      myDataRef.on('child_added', function(snapshot) {
+          //console.log(snapshot.val());
+        IPMapper.addIPMarker(snapshot.val());
+      });
+      
 </script> 
     
     <div id="header"></div>
