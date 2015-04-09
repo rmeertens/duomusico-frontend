@@ -1,6 +1,6 @@
 var test;
 var lastLanguageRequested;
-var ipAdress = "http://80.60.177.158:8002/"
+var ipAdress = "http://86.89.41.233:8002/"
 //var ipAdress = "http://pinchofintelligence.com:8002/"
 
 var playListsPerLanguage = {};
