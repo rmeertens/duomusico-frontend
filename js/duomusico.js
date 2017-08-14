@@ -1,6 +1,7 @@
 var test;
 var lastLanguageRequested;
-var ipAdress = "http://80.60.177.158:8002/"
+var ipAdress = "http://duomusicobackend.pinchofintelligence.com:8002/"
+// WHY DOES THIS NOT SHOW UP
 //var ipAdress = "http://pinchofintelligence.com:8002/"
 
 var playListsPerLanguage = {};
