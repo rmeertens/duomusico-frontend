@@ -1,9 +1,9 @@
 var test;
 var lastLanguageRequested;
 
-//var ipAdress = "http://duomusicobackend.pinchofintelligence.com:8002/"
+var ipAdress = "http://duomusicobackend.pinchofintelligence.com:8002/"
 //var ipAdress = "http://pinchofintelligence.com:8002/"
-var ipAdress = "http://localhost:1235/"
+//var ipAdress = "http://localhost:1235/"
 
 var playListsPerLanguage = {};
 playListsPerLanguage["nl"] = "http://open.spotify.com/user/duomusico/playlist/6gHPRlwa6cBTpaeHQfZto1";
