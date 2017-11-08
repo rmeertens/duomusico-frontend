@@ -1,8 +1,9 @@
 var test;
 var lastLanguageRequested;
 
-var ipAdress = "http://duomusicobackend.pinchofintelligence.com:8002/"
+//var ipAdress = "http://duomusicobackend.pinchofintelligence.com:8002/"
 //var ipAdress = "http://pinchofintelligence.com:8002/"
+var ipAdress = "http://localhost:1235/"
 
 var playListsPerLanguage = {};
 playListsPerLanguage["nl"] = "http://open.spotify.com/user/duomusico/playlist/6gHPRlwa6cBTpaeHQfZto1";
@@ -97,7 +98,8 @@ function getBestSongsDuolingo() {
 
     $.ajax({
         type: "GET",
-        url: ipAdress+"duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=false",
+        //url: ipAdress+"duolingorecommendation?username=" + document.getElementById("id_of_textbox").value + "&random=false",
+        url: ipAdress+"recommend/" + document.getElementById("id_of_textbox").value,
         contentType: "application/json; charset=UTF-8",
         dataType: "json",
 

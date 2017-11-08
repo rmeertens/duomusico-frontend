@@ -18,7 +18,7 @@
     <!-- Flags -->
     <link href="./css/flag-icon.css" rel="stylesheet">
     <!-- Custom CSS -->
-    
+    <script src="js/duomusico.js"></script>
 
 <link href="css/duomusico.css" rel="stylesheet">
     <!--[if lt IE 9]>
@@ -45,20 +45,55 @@ $(function(){
     $("#footer").load("footer.html"); 
 });
 </script> 
-    <div id="header"></div>
     
-
+    <div id="header"></div>
     <section>
         <div class="container">
-            <h3>Listen to songs with words you know!</h3>
-                <p>Duolingo is a site where you can learn a langauge for free. As you go through their lessons you learn new words. Our site searches for music where you know most of the words. As you learn new words the songs on this site change, so be sure to come back often! </p>
+            
+                <h3>What to listen</h3>
+             <p>Duolingo is a site where you can learn a langauge for free. As you go through their lessons you learn new words. Our site searches for music where you know most of the words. As you learn new words the songs on this site change, so be sure to come back often! </p>
+             <p>Do you want to get songs in a different language? Change your language on duolingo.com and it will be updated here!</p>
+            <div class="reply">
+                <p> You can find your username here: .... </p>
+            </div>
+            <button class="fold_reply">Show how to find my username</button>
+            
+            <p>Make sure to follow me on Twitter to see more projects I did!</p>
 
-            <div class="span12" style="text-align:center">
-    
-              <p><a class="btn btn-primary btn-lg" href="duolingo.html" role="button"><img src="Duolingo_logo.png" alt="Duolingo is awesome" class="img-rounded"  height="42" width="42"> Use Duolingo</a>
-            <a class="btn btn-primary btn-lg" href="country.html" role="button"><img src="world.png" alt="The world is awesome" class="img-rounded"  height="42" width="42"> Songs from a specific country</a></p>
-
-            </div>   
+                <input type="text" name="id_of_textbox" value="rmeertens" id="id_of_textbox">
+                <button onclick="getBestSongsDuolingo()">Best songs</button>
+            </div>
+    </section>
+    <section>
+    <div class="container">
+        <h1></h1>
+        <div class="alert alert-info" role="alert" id="loadingNotification" hidden="True">Loading data...</div>
+        <div class="alert alert-danger" role="alert" id="errorNotification" hidden="True">Something went wrong!</div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+        
+        
+           <div class="row bs-downloads">
+    <div class="col-sm-6">
+       <div id="explanation">
+            <h3>What do the icons mean?</h3>
+            <h5><span class="glyphicon glyphicon-user" aria-hidden="true"></span>   Artist name</h5>
+            <h5><span class="glyphicon glyphicon-music" aria-hidden="true"></span>  Song name</h5>
+            <h5><span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span> The score of this song</h5>
+        </div>
+    </div>
+    <div class="col-sm-6">
+      <div id="currentLanguageOptions">
+        
+    </div>
+  </div>
+        </div>
+        <!-- /.row -->
+        <div id="test1"><h2>Enter your Duolingo username above, we search for relevant music. </h2> <img src="Duolingo_logo.png" alt="The Duolingo owl" style="width:165px;height:150px">
+</div>
+        <!-- Related Projects Row -->
         </div>
     </section>
 
@@ -73,6 +108,12 @@ $(function(){
     <script src="js/bootstrap.min.js"></script>
 
 </body>
+    <script>
+        $('.reply').toggle(1)
+        $('.fold_reply').click(function() {
+        $('.reply').toggle(500)
+}   )
+    </script>
 <script>
     // document.getElementById("loading").style.display = "none";
 </script>
