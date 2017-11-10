@@ -42,6 +42,7 @@
      <script> 
 $(function(){
   $("#header").load("header.html"); 
+    $("#footer").load("footer.html"); 
 });
 </script> 
     <div id="header"></div>
@@ -49,23 +50,19 @@ $(function(){
 
     <section>
         <div class="container">
-            <h1>Roland Meertens<script src="//platform.linkedin.com/in.js" type="text/javascript"></script>
-<script type="IN/MemberProfile" data-id="https://www.linkedin.com/in/rmeertens" data-format="hover" data-related="false"></script></h1>
-            <div class="row">
-  
-                <div class="col-md-6"><p>My name is Roland, I love everything related to artificial intelligence. </p>
-                <p>The idea for Duomusico came to me while living in Paris. I was wondering what I could to do emerse myself in the language, and what songs I would like to hear. As research-project I started this website. Several years later it's still online for everybody to use.</p>
-                    <p>If you like this project, follow me on twitter and take a look at my blog pinchofintelligence.com    </p>
-                
-                Places where you will find me: 
-                    Twitter, 
-                    LinkedIn
-                    Stackoverflow.com
-                </div>
-            </div>
+            <h1>Frequently asked questions</h1>
+            <h3>How do you score songs?</h3>
+            <p>Using an algorithm called TF-IDF. I first determined for each word in every lyric how "important" that word is for language understanding. If a word occurs very often (like the word: "me"), then it's not really interesting to server somebody a lyric with only that word a lot of times if he already knows more words</p>
+            <h3>Do songs keep changing over time?</h3>    
+            <p>Yes. Each time you learn more words the recommendations change. Make sure you check back often to get the latest recommendations for your level of knowledge!</p>
+            <h3>Why doesn't this work for language X?</h3>
+            <p>It's pretty difficult to find lists with lyrics in all languages. I added a lot of songs I know, but I don't know songs in all languages. If you happen to have a list of cool songs in a language I'm missing, please send it to me!</p>
+            <h3>Do you make any money thanks to this site?</h3>
+            <p>No, this site still standing after a research project. As it's pretty cool I never took it down. I don't have any advertisements or other ways of monetizing this site and I don't plan on that. In fact, I have to pay to keep it in the air. </p>
         </div>
     </section>
 
+    <div id="footer"></div>
     <!-- jQuery -->
     <script src="js/jquery.js"></script>
 
